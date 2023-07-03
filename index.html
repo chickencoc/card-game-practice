@@ -1,3 +1,4 @@
+<!-- Bobkong Weather HTML -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,54 +12,80 @@
         @import url('https://fonts.googleapis.com/css2?family=Nanum+Gothic&display=swap');
         /* font-family: 'Nanum Gothic', sans-serif; */
 
-        * {box-sizing: border-box; padding: 0; margin: 0; font-size: 20px; font-family: 'Nanum Gothic', sans-serif;}
+        * {box-sizing: border-box; padding: 0; margin: 0; font-size: 20px; font-family: 'Nanum Gothic', sans-serif; -webkit-tap-highlight-color : transparent !important;}
         #case {max-width: 420px; margin: 7vh auto; background-color: #f9f9f9;}
         #top {width: 100%; height: 50px; background-color: #4091e8; padding: 0.55rem;}
-        #mid {min-height: 60vh; padding: 0.3rem; -webkit-user-select:none; -moz-user-select:none; -ms-user-select:none; user-select:none;}
-        #mid .midInner {width: 100%; height: 70px; padding: 0.35rem 0.7rem; margin-bottom: 0.35rem; background-color: #fff; border-radius: 7px; box-shadow: 0 0 7px -1px #ccc; display: grid; grid-template-columns: 15% 85%; place-items: center; transition: all 0.3s;}
-        #mid .midInner:hover {background-color: #fafafa; cursor: pointer;}
-        #mid .midInner .midInnerImg {width: 65%;}
-        #mid .midInner .midInnerInfo {text-align: center;}
-        #mid .midInner .midInnerInfo p:first-child {font-size: 0.75rem;}
-        #mid .midInner .midInnerInfo p:last-child {font-size: 1.25rem;}
+
+        .mid {min-height: 60vh; padding: 0.3rem; -webkit-user-select:none; -moz-user-select:none; -ms-user-select:none; user-select:none;}
+        #mid1 .midInner {width: 100%; height: 70px; padding: 0.35rem 0.7rem; margin-bottom: 0.35rem; background-color: #fff; border-radius: 7px; box-shadow: 0 0 7px -1px #ccc; display: grid; grid-template-columns: 15% 85%; place-items: center; transition: all 0.3s;}
+        #mid1 .midInner:hover {background-color: #fafafa; cursor: pointer;}
+        #mid1 .midInner .midInnerImg {width: 65%;}
+        #mid1 .midInner .midInnerInfo {text-align: center;}
+        #mid1 .midInner .midInnerInfo p:first-child {font-size: 0.75rem;}
+        #mid1 .midInner .midInnerInfo p:last-child {font-size: 1.25rem;}
+
+        #mid1 {display: none;}
+        /* #mid2 {position: relative;}
+        #mid2 .card {width: 110px; aspect-ratio: 3/4; background-color: #fff; border-radius: 7px; box-shadow: 0 0 7px -1px #ccc; position: absolute; top: 50%; left: 50%;}
+        #mid2 .card:nth-child(1) {transform: translate(-150%, -35%) rotate(-15deg);}
+        #mid2 .card:nth-child(5) {transform: translate(50%, -35%) rotate(15deg);}
+        #mid2 .card:nth-child(3) {transform: translate(-50%, -50%);}
+        #mid2 .card:nth-child(2) {transform: translate(-100%, -45%) rotate(-7deg);}
+        #mid2 .card:nth-child(4) {transform: translate(0%, -45%) rotate(7deg);} */
+
+        #mid2 .card {width: 110px; aspect-ratio: 3/4; background-color: #fff; border-radius: 7px; box-shadow: 0 0 7px -1px #ccc; transition: all 0.2s ease-in-out; cursor: pointer;}
+        #mid2 #cardResultBox > * {margin: 0 auto;}
+        #mid2 #cardBox {width: 100%; min-height: 100%; display: grid; grid-template-columns: repeat(5, 55px); place-items: center; justify-content: center;}
+        #mid2 .cardSet:nth-child(1) {transform: rotate(-15deg) translateY(15%);}
+        #mid2 .cardSet:nth-child(1):hover {transform: rotate(-15deg) translateY(-15%);}
+        #mid2 .cardSet:nth-child(2) {transform: rotate(-7deg) translateY(5%);}
+        #mid2 .cardSet:nth-child(2):hover {transform: rotate(-7deg) translateY(-25%);}
+        #mid2 .cardSet:nth-child(3) {transform: rotate(0);}
+        #mid2 .cardSet:nth-child(3):hover {transform: rotate(0) translateY(-30%);}
+        #mid2 .cardSet:nth-child(4) {transform: rotate(7deg) translateY(5%);}
+        #mid2 .cardSet:nth-child(4):hover {transform: rotate(7deg) translateY(-25%);}
+        #mid2 .cardSet:nth-child(5) {transform: rotate(15deg) translateY(15%);}
+        #mid2 .cardSet:nth-child(5):hover {transform: rotate(15deg) translateY(-15%);}
 
         #bot #txt h6 {padding: 0.45rem; font-size: 0.55rem;}
         #bot #set {display: flex; justify-content: right; padding: 0 0.8rem;}
-        #bot #set #setting {width: 12%; border: 1px solid #0002; border-radius: 50%; box-shadow: 0 5px 7px 0px #ccc; display: flex; justify-content: center; align-items: center; overflow: hidden; cursor: pointer;}
-        #bot #set #setting #settingImg { width: 100%;}
+        #bot #set #setting {width: 12%; border: 1px solid #0002; border-radius: 50%; box-shadow: 0 5px 7px 0px #ccc; display: flex; justify-content: center; align-items: center; overflow: hidden; cursor: pointer; transition: all 0.4s ease-in-out;}
+        #bot #set #setting:hover {transform: rotate(90deg); box-shadow: 5px 0 7px 0px #ccc;}
+        #bot #set #setting #settingImg {width: 100%;}
 
         @media (max-width: 420px) {
             #case {max-width: 100%; margin: 0; background-color: #f9f9f9;}
-            #mid {min-height: calc(100vh - 124px); overflow: hidden;}
+            .mid {min-height: calc(100vh - 124px); overflow: hidden;}
         }
 
     </style>
 </head>
 <body>
     <div id="case">
+        <img id="팡" src="https://www.weather.go.kr/w/resources/image/renew/ic_sym_01.png" style="display: none;" />
         <div id="top">
-            <h2>🧊 BobKong Weather</h2>
+            <h2>🧊 BobKong Weather ( 서울 )</h2>
         </div>
-        <div id="mid">
+        <div id="mid1" class="mid">
             <div class="midInner" onclick=tempControl()>
                 <img class="midInnerImg" src="https://www.weather.go.kr/w/resources/image/renew/ic_sym_16.png" />
                 <div class="midInnerInfo">
                     <p>Temperature:</p>
-                    <p>0 ℃</p>
+                    <p>loading...</p>
                 </div>
             </div>
             <div class="midInner" onclick=humidControl()>
                 <img class="midInnerImg" src="https://www.weather.go.kr/w/resources/image/renew/ic_sym_17.png" />
                 <div class="midInnerInfo">
                     <p>Humidity:</p>
-                    <p>0 %</p>
+                    <p>loading...</p>
                 </div>
             </div>
             <div class="midInner" onclick=windControl()>
                 <img class="midInnerImg" src="https://www.weather.go.kr/w/resources/image/renew/ic_sym_18.png" />
                 <div class="midInnerInfo">
                     <p>Wind Speed:</p>
-                    <p>East 1 m/s</p>
+                    <p>loading...</p>
                 </div>
             </div>
             <div class="midInner">
@@ -72,7 +99,51 @@
                 <img class="midInnerImg" src="https://www.weather.go.kr/w/resources/image/renew/ic_sym_10.png" />
                 <div class="midInnerInfo">
                     <p>Sunrise:</p>
-                    <p>05:14</p>
+                    <p>00:00:00</p>
+                </div>
+            </div>
+            <div class="midInner" onclick=taptap()>
+                <img class="midInnerImg" src="https://www.weather.go.kr/w/resources/image/renew/ic_sym_10.png" />
+                <div class="midInnerInfo">
+                    <p>Sunrise:</p>
+                    <p>00:00:00</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="mid2" class="mid">
+            <div id="cardResultBox">
+                <div class="cardResult card" onclick=tempControl()>
+                    <div class="cardInfo">
+                        <p>CARD</p>
+                    </div>
+                </div>
+            </div>
+            <div id="cardBox">
+                <div class="cardSet card" onclick=tempControl()>
+                    <div class="cardInfo">
+                        <p>CARD</p>
+                    </div>
+                </div>
+                <div class="cardSet card" onclick=tempControl()>
+                    <div class="cardInfo">
+                        <p>CARD</p>
+                    </div>
+                </div>
+                <div class="cardSet card" onclick=tempControl()>
+                    <div class="cardInfo">
+                        <p>CARD</p>
+                    </div>
+                </div>
+                <div class="cardSet card" onclick=tempControl()>
+                    <div class="cardInfo">
+                        <p>CARD</p>
+                    </div>
+                </div>
+                <div class="cardSet card" onclick=tempControl()>
+                    <div class="cardInfo">
+                        <p>CARD</p>
+                    </div>
                 </div>
             </div>
         </div>
@@ -92,7 +163,26 @@
 <script>
     let midInner = document.getElementsByClassName("midInner");
     let midInnerInfo = document.getElementsByClassName("midInnerInfo");
+    let weather;
 
+    // Weather API
+    function fetchWeather() {
+        const apiKey = "1b9de2f304a91d21750ebcee97b6ca7d";
+        const url = `https://api.openweathermap.org/data/2.5/weather?q=seoul&units=metric&appid=${apiKey}`;
+
+        // ajax 요청
+        fetch(url)
+            .then(res => res.json()) // json 포맷으로 변경
+            .then(data => {
+                console.log(data);
+                midInnerInfo[0].children[1].innerText = `${data.main.temp} ℃`;
+                midInnerInfo[1].children[1].innerText = `${data.main.humidity} %`;
+                midInnerInfo[2].children[1].innerText = `${data.wind.speed} m/s`;
+            })
+            .catch(() => console.error("error"));
+    }
+    fetchWeather();
+    
     // temperature
     let temperature = 0;
     function tempControl() {
@@ -116,6 +206,12 @@
         if(humidNum <= 100) {
             midInner[1].style.background = `linear-gradient(0deg, rgba(0,91,166,1) 0%, rgba(255,255,255,1) ${humidNum * 5}%)`;
             midInnerInfo[1].children[1].innerText = `${humidNum * 2} %`;
+        }
+        if(humidNum == 12) {
+            midInnerInfo[1].children[1].style.color = "#fefefe";
+        }
+        if(humidNum == 19) {
+            midInnerInfo[1].children[0].style.color = "#fefefe";
         }
         humidNum++;
     };
@@ -141,6 +237,10 @@
         sunFlag = !sunFlag;
         if(sunFlag) {
             midInner[4].style.backgroundColor = "#fc4c1399";
+            sec++;
+            hms = hour.toString().padStart(2, '0') + ":" + min.toString().padStart(2, '0') + ":" + sec.toString().padStart(2, '0');
+            midInnerInfo[4].children[1].innerText = `${hms}`;
+
             sunInterval = setInterval(() => {
                 if(sec === 60) {
                     min++;
@@ -159,4 +259,12 @@
             clearInterval(sunInterval);
         }
     };
+
+    // tap
+    function taptap() {
+        const mids = document.getElementsByClassName("mid");
+        mids[0].style.display = "none";
+        mids[1].style.display = "block";
+    };
+
 </script>
