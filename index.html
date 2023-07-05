@@ -32,19 +32,25 @@
         #mid2 .card {background-image: url("/images/cookieCardBackside.jpg");}
         #mid2 #cardResultBox {height: 35%; min-height: 150px; display: grid; place-items: center;}
         #mid2 #cardBox {width: 100%; height: 50%; min-height: 200px; display: grid; grid-template-columns: repeat(5, 70px); place-items: center; justify-content: center;}
+        #mid2:has(input.gStage:nth-child(1):checked) #cardBox {grid-template-columns: repeat(3, 70px);}
+        #mid2:has(input.gStage:nth-child(1):checked) #cardBox :is(.cardSet:nth-child(1), .cardSet:nth-child(5)) {display: none;}
+
         #mid2 #cardBox input {display: none;}
         #mid2 #cardBox .cardSet {transition: all 0.2s ease-in-out;}
-        #mid2 .cardSet:nth-child(1) {transform: rotate(-15deg) translateY(15%);}
-        #mid2 .cardSet:nth-child(1):is(:hover, :has(input:checked)) {transform: rotate(-15deg) translateY(-5%);}        
-        #mid2 .cardSet:nth-child(2) {transform: rotate(-7deg) translateY(5%);}
-        #mid2 .cardSet:nth-child(2):is(:hover, :has(input:checked)) {transform: rotate(-7deg) translateY(-15%);}
-        #mid2 .cardSet:nth-child(3) {transform: rotate(0);}
-        #mid2 .cardSet:nth-child(3):is(:hover, :has(input:checked)) {transform: rotate(0) translateY(-20%);}
-        #mid2 .cardSet:nth-child(4) {transform: rotate(7deg) translateY(5%);}
-        #mid2 .cardSet:nth-child(4):is(:hover, :has(input:checked)) {transform: rotate(7deg) translateY(-15%);}
-        #mid2 .cardSet:nth-child(5) {transform: rotate(15deg) translateY(15%);}
-        #mid2 .cardSet:nth-child(5):is(:hover, :has(input:checked)) {transform: rotate(15deg) translateY(-5%);}
-        #mid2 #cardResultBox #cardInfo {width: 100%; height: 100%; padding: 10px;}
+        #mid2 #cardBox .cardSet:nth-child(1) {transform: rotate(-15deg) translateY(15%);}
+        #mid2 #cardBox .cardSet:nth-child(1):is(:hover, :has(input:checked)) {transform: rotate(-15deg) translateY(-5%);}        
+        #mid2 #cardBox .cardSet:nth-child(2) {transform: rotate(-7deg) translateY(5%);}
+        #mid2 #cardBox .cardSet:nth-child(2):is(:hover, :has(input:checked)) {transform: rotate(-7deg) translateY(-15%);}
+        #mid2 #cardBox .cardSet:nth-child(3) {transform: rotate(0);}
+        #mid2 #cardBox .cardSet:nth-child(3):is(:hover, :has(input:checked)) {transform: rotate(0) translateY(-20%);}
+        #mid2 #cardBox .cardSet:nth-child(4) {transform: rotate(7deg) translateY(5%);}
+        #mid2 #cardBox .cardSet:nth-child(4):is(:hover, :has(input:checked)) {transform: rotate(7deg) translateY(-15%);}
+        #mid2 #cardBox .cardSet:nth-child(5) {transform: rotate(15deg) translateY(15%);}
+        #mid2 #cardBox .cardSet:nth-child(5):is(:hover, :has(input:checked)) {transform: rotate(15deg) translateY(-5%);}
+
+        .cardResult strong {font-size: 0.7rem;}
+        .cardResult strong:last-child {transform: rotate(180deg);}
+        #mid2 .cardResult {padding: 0.4rem; display: flex; flex-direction: column; justify-content: space-between;}
 
         #mid2 #chooseBox {height: 15%; min-height: 35px; display: grid; place-items: center;}
         #mid2 #chooseBox #chooseBtn {padding: 12px 24px; background-color: #fff; color: #000; border-width: 2px; border-style: solid; border-color: #000; border-radius: 36px; font-size: 0.7rem; font-weight: 700; cursor: pointer; transition: all 0.2s ease-in-out;}
@@ -52,7 +58,7 @@
 
         #bot #txt h6 {padding: 0.45rem; font-size: 0.55rem;}
         #bot #set {display: flex; justify-content: right; padding: 0 0.8rem;}
-        #bot #set #setting {width: 12%; border: 1px solid #0002; border-radius: 50%; box-shadow: 0 5px 7px 0px #ccc; display: flex; justify-content: center; align-items: center; overflow: hidden; cursor: pointer; transition: all 0.4s ease-in-out;}
+        #bot #set #setting {width: 45px; border: 1px solid #0002; border-radius: 50%; box-shadow: 0 5px 7px 0px #ccc; display: flex; justify-content: center; align-items: center; overflow: hidden; cursor: pointer; transition: all 0.4s ease-in-out;}
         #bot #set #setting:hover {transform: rotate(90deg); box-shadow: 5px 0 7px 0px #ccc;}
         #bot #set #setting #settingImg {width: 100%;}
 
@@ -116,11 +122,13 @@
         </div>
 
         <div id="mid2" class="mid">
+            <input type="radio" class="gStage" name="gStage" value="0">
+            <input type="radio" class="gStage" name="gStage" value="1">
+            <input type="radio" class="gStage" name="gStage" value="2">
             <div id="cardResultBox">
                 <div class="cardResult" style="cursor: inherit;">
-                    <div class="cardInfo">
-                        <p>Joker</p>
-                    </div>
+                    <strong>Loading</strong>
+                    <strong>Loading</strong>
                 </div>
             </div>
             <div id="cardBox">
@@ -271,27 +279,61 @@
     };
 
     // choose card
-    let gStage = 0;
+    let gStage = 1;
     const chooseBtn = () => {
         try {
             const cardInput = document.querySelector('input[name="cardInput"]:checked').id;
             
             battingBtn(100);
             // 단계 0,1,2 - 1(2),2(3),4(5)
+            const cardSet = document.getElementsByClassName("cardSet");
+
             const stageInfo = [4, 2, 1];
             const joker = Math.round(Math.random() * stageInfo[gStage]);
 
             const cardResult = document.getElementsByClassName("cardResult")[0];
-            console.log(cardResult);
             console.log(joker == cardInput);
+            const cardImages = [
+                {
+                    "url" : "https://raw.githubusercontent.com/chickencoc/jsPractice/main/images/cookieCardAce.jpg",
+                    "txt" : "♠ A"
+                },
+                {
+                    "url" : "https://raw.githubusercontent.com/chickencoc/jsPractice/main/images/cookieCardJack.jpg",
+                    "txt" : "♠ J"
+                },
+                {
+                    "url" : "https://raw.githubusercontent.com/chickencoc/jsPractice/main/images/cookieCardQueen.jpg",
+                    "txt" : "♠ Q"
+                },
+                {
+                    "url" : "https://raw.githubusercontent.com/chickencoc/jsPractice/main/images/cookieCardKing.jpg",
+                    "txt" : "♠ K"
+                },
+                {
+                    "url" : "https://raw.githubusercontent.com/chickencoc/jsPractice/main/images/cookieCardThree.jpg",
+                    "txt" : "♠ 3"
+                },
+                {
+                    "url" : "https://raw.githubusercontent.com/chickencoc/jsPractice/main/images/cookieCardJoker.jpg",
+                    "txt" : "Joker"
+                }
+            ];
             if(joker == cardInput) {
-                cardResult.style.backgroundImage = "url('./image/cookieCardJoker.jpg')";
+                cardResult.style.backgroundImage = `url(${cardImages[5].url})`;
+                //cardResult.children.forEach(e => { e.innerText = `${cardImages[5].txt}` });
+                cardResult.children[0].innerText = `${cardImages[5].txt}`;
+                cardResult.children[1].innerText = `${cardImages[5].txt}`;
+
             } else {
-                cardResult.style.backgroundImage = "url('./image/cookieCardAce.jpg')";
+                const rc = Math.round(Math.random() * (cardImages.length - 1));
+                cardResult.style.backgroundImage = `url(${cardImages[rc].url})`;
+                cardResult.children[0].innerText = `${cardImages[rc].txt}`;
+                cardResult.children[1].innerText = `${cardImages[rc].txt}`;
             };
 
         } catch {
-            console.log("error");
+            console.log("!!!error!!!");
             return;
         }
     };
