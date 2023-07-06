@@ -24,18 +24,14 @@
         #mid1 .midInner .midInnerInfo p:first-child {font-size: 0.75rem;}
         #mid1 .midInner .midInnerInfo p:last-child {font-size: 1.25rem;}
 
-        /* 임시 작업용 none */
-        #mid1 {display: none;}
         /* https://www.sk2gacha.com/_next/image?url=https%3A%2F%2Fblog.kakaocdn.net%2Fdn%2FbhfQqS%2FbtrjbyMezrk%2F4KnsrBkEQKv7P7PT36jTb0%2Fimg.gif&w=96&q=75 */
 
         #mid2 :is(.card, .cardResult) {width: 110px; aspect-ratio: 3/4; background-color: #fff; border-radius: 7px; box-shadow: 0 0 7px 1px #777; cursor: pointer; background-size: cover ; background-position: center;}
         #mid2 .card {background-image: url("/images/cookieCardBackside.jpg");}
         #mid2 #cardResultBox {height: 35%; min-height: 150px; display: grid; place-items: center;}
         #mid2 #cardBox {width: 100%; height: 50%; min-height: 200px; display: grid; grid-template-columns: repeat(5, 70px); place-items: center; justify-content: center;}
-        #mid2:has(input.gStage:nth-child(1):checked) #cardBox {grid-template-columns: repeat(3, 70px);}
-        #mid2:has(input.gStage:nth-child(1):checked) #cardBox :is(.cardSet:nth-child(1), .cardSet:nth-child(5)) {display: none;}
 
-        #mid2 #cardBox input {display: none;}
+        #mid2 input {display: none;}
         #mid2 #cardBox .cardSet {transition: all 0.2s ease-in-out;}
         #mid2 #cardBox .cardSet:nth-child(1) {transform: rotate(-15deg) translateY(15%);}
         #mid2 #cardBox .cardSet:nth-child(1):is(:hover, :has(input:checked)) {transform: rotate(-15deg) translateY(-5%);}        
@@ -48,13 +44,22 @@
         #mid2 #cardBox .cardSet:nth-child(5) {transform: rotate(15deg) translateY(15%);}
         #mid2 #cardBox .cardSet:nth-child(5):is(:hover, :has(input:checked)) {transform: rotate(15deg) translateY(-5%);}
 
+        #mid2:has(input.gStage:nth-child(2):checked) #cardBox {grid-template-columns: repeat(3, 70px);}
+        #mid2:has(input.gStage:nth-child(2):checked) #cardBox :is(.cardSet:nth-child(1), .cardSet:nth-child(5)) {display: none;}
+        #mid2:has(input.gStage:nth-child(3):checked) #cardBox {grid-template-columns: repeat(2, 70px);}
+        #mid2:has(input.gStage:nth-child(3):checked) #cardBox :is(.cardSet:nth-child(1), .cardSet:nth-child(2), .cardSet:nth-child(5)) {display: none;}
+
         .cardResult strong {font-size: 0.7rem;}
         .cardResult strong:last-child {transform: rotate(180deg);}
         #mid2 .cardResult {padding: 0.4rem; display: flex; flex-direction: column; justify-content: space-between;}
 
         #mid2 #chooseBox {height: 15%; min-height: 35px; display: grid; place-items: center;}
-        #mid2 #chooseBox #chooseBtn {padding: 12px 24px; background-color: #fff; color: #000; border-width: 2px; border-style: solid; border-color: #000; border-radius: 36px; font-size: 0.7rem; font-weight: 700; cursor: pointer; transition: all 0.2s ease-in-out;}
-        #mid2 #chooseBox #chooseBtn:hover {color: #ff671c; border-color: #ff671c; box-shadow: 0 0 7px -1px #333;}
+        #mid2 #chooseBox button {padding: 12px 24px; background-color: #fff; color: #000; border-width: 2px; border-style: solid; border-color: #000; border-radius: 36px; font-size: 0.7rem; font-weight: 700; cursor: pointer; transition: all 0.2s ease-in-out;}
+        #mid2 #chooseBox button:hover {color: #ff671c; border-color: #ff671c; box-shadow: 0 0 7px -1px #333;}
+        #mid2 #chooseBox #confirmBtn {display: none; background-color: #fb06;}
+
+        #mid3 #mid3Inner {width: 100%; height: 100%; display: grid; place-items: center;}
+        #mid3 #resultBox {width: 80%; height: 50%; min-height: 230px; background-color: #fff; border: 4px dashed #ff671c; border-radius: 10px;}
 
         #bot #txt h6 {padding: 0.45rem; font-size: 0.55rem;}
         #bot #set {display: flex; justify-content: right; padding: 0 0.8rem;}
@@ -68,6 +73,10 @@
             #mid2 #cardBox {grid-template-columns: repeat(5, 57px);}
         }
 
+        /* 임시 작업용 none */
+        #mid1 {display: none;}
+        #mid3 {display: none;}
+
     </style>
 </head>
 <body>
@@ -76,6 +85,7 @@
         <div id="top">
             <h2>🧊 BobKong Weather ( 서울 )</h2>
         </div>
+        <!-- page 1 -->
         <div id="mid1" class="mid">
             <div class="midInner" onclick=tempControl()>
                 <img class="midInnerImg" src="https://www.weather.go.kr/w/resources/image/renew/ic_sym_16.png" />
@@ -112,7 +122,7 @@
                     <p>00:00:00</p>
                 </div>
             </div>
-            <div class="midInner" onclick=taptap()>
+            <div class="midInner" onclick=taptap(0)>
                 <img class="midInnerImg" src="https://www.weather.go.kr/w/resources/image/renew/ic_sym_10.png" />
                 <div class="midInnerInfo">
                     <p>Sunrise:</p>
@@ -120,11 +130,12 @@
                 </div>
             </div>
         </div>
-
+        <!-- page 2 -->
         <div id="mid2" class="mid">
             <input type="radio" class="gStage" name="gStage" value="0">
             <input type="radio" class="gStage" name="gStage" value="1">
             <input type="radio" class="gStage" name="gStage" value="2">
+            <p id="gPoint"></p>
             <div id="cardResultBox">
                 <div class="cardResult" style="cursor: inherit;">
                     <strong>Loading</strong>
@@ -150,8 +161,20 @@
             </div>
             <div id="chooseBox">
                 <button id="chooseBtn" onclick="chooseBtn()">Choose a Card</button>
+                <button id="chooseBtn" onclick="taptap(1)">STOP</button>
+                <button id="chooseBtn" onclick="chooseBtn()">LOADING POINT</button>
+                <button id="confirmBtn" onclick="taptap(1)">Confirm</button>
             </div>
         </div>
+        <!-- page 3 -->
+        <div id="mid3" class="mid">
+            <div id="mid3Inner">
+                <div id="resultBox">
+                    
+                </div>
+            </div>
+        </div>
+
         <div id="bot">
             <div id="set">
                 <div id="setting">
@@ -265,24 +288,28 @@
     };
 
     // tap ----------------------------------
-    function taptap() {
+    function taptap(n) {
         const mids = document.getElementsByClassName("mid");
-        mids[0].style.display = "none";
-        mids[1].style.display = "block";
+        mids[n].style.display = "none";
+        mids[n + 1].style.display = "block";
     };
 
     // card game ----------------------------------
     // batting coin
+    let gPoint = 1000;
     let batting = 0;
     const battingBtn = (n) => {
-        batting = n;
+        if(gPoint >= n) {
+            gPoint -= n;
+            batting = n;
+        }
     };
 
     // choose card
-    let gStage = 1;
+    let gStage = 0;
     const chooseBtn = () => {
         try {
-            const cardInput = document.querySelector('input[name="cardInput"]:checked').id;
+            const cardInput = document.querySelector('input[name="cardInput"]:checked');
             
             battingBtn(100);
             // 단계 0,1,2 - 1(2),2(3),4(5)
@@ -292,7 +319,7 @@
             const joker = Math.round(Math.random() * stageInfo[gStage]);
 
             const cardResult = document.getElementsByClassName("cardResult")[0];
-            console.log(joker == cardInput);
+            console.log(joker == cardInput.id);
             const cardImages = [
                 {
                     "url" : "https://raw.githubusercontent.com/chickencoc/jsPractice/main/images/cookieCardAce.jpg",
@@ -319,19 +346,32 @@
                     "txt" : "Joker"
                 }
             ];
-            if(joker == cardInput) {
+
+            const gameBtns = document.getElementById("chooseBox").children;
+            if(joker === parseInt(cardInput.id)) {
                 cardResult.style.backgroundImage = `url(${cardImages[5].url})`;
                 //cardResult.children.forEach(e => { e.innerText = `${cardImages[5].txt}` });
                 cardResult.children[0].innerText = `${cardImages[5].txt}`;
                 cardResult.children[1].innerText = `${cardImages[5].txt}`;
 
+                gameBtns[0].style.display = "none";
+                gameBtns[1].style.display = "block";
             } else {
                 const rc = Math.round(Math.random() * (cardImages.length - 1));
                 cardResult.style.backgroundImage = `url(${cardImages[rc].url})`;
                 cardResult.children[0].innerText = `${cardImages[rc].txt}`;
                 cardResult.children[1].innerText = `${cardImages[rc].txt}`;
+                if(gStage < 2) {
+                    console.log(gStage);
+                    gStage++;
+                    document.getElementsByClassName("gStage")[gStage].checked = true;
+                } else {
+                    gameBtns[0].style.display = "none";
+                    gameBtns[1].style.display = "block";
+                }
             };
 
+            cardInput.checked = false;
         } catch {
             console.log("!!!error!!!");
             return;
