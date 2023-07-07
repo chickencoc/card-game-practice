@@ -57,6 +57,8 @@
         #mid2 #chooseBox button {padding: 12px 24px; background-color: #fff; color: #000; border-width: 2px; border-style: solid; border-color: #000; border-radius: 36px; font-size: 0.7rem; font-weight: 700; cursor: pointer; transition: all 0.2s ease-in-out;}
         #mid2 #chooseBox button:hover {color: #ff671c; border-color: #ff671c; box-shadow: 0 0 7px -1px #333;}
         #mid2 #chooseBox #confirmBtn {display: none; background-color: #fb06;}
+        #mid2 #chooseBox #chooseBoxInner {display: none;}
+        #chooseBoxGo {display: none;}
 
         #mid3 #mid3Inner {width: 100%; height: 100%; display: grid; place-items: center;}
         #mid3 #resultBox {width: 80%; height: 50%; min-height: 230px; background-color: #fff; border: 4px dashed #ff671c; border-radius: 10px;}
@@ -160,10 +162,14 @@
                 </label>
             </div>
             <div id="chooseBox">
-                <button id="chooseBtn" onclick="chooseBtn()">Choose a Card</button>
-                <button id="chooseBtn" onclick="taptap(1)">STOP</button>
-                <button id="chooseBtn" onclick="chooseBtn()">LOADING POINT</button>
-                <button id="confirmBtn" onclick="taptap(1)">Confirm</button>
+                <div id="chooseBoxEnd">
+                    <button id="chooseBtn" onclick="chooseBtn()">Choose a Card</button>
+                    <button id="confirmBtn" onclick="taptap(1)">Confirm</button>
+                </div>
+                <div id="chooseBoxGo">
+                    <button id="stopBtn" onclick="taptap(1)">STOP</button>
+                    <button id="continueBtn" onclick="chooseBtn()">POINT * 5</button>
+                </div>
             </div>
         </div>
         <!-- page 3 -->
@@ -172,6 +178,7 @@
                 <div id="resultBox">
                     
                 </div>
+                <button onclick="taptap(2)">reset</button>
             </div>
         </div>
 
@@ -189,6 +196,10 @@
 </body>
 </html>
 <script>
+    console.log(` ╦┌─┐┬┌─┌─┐┬─┐  ╔═╗┌─┐┬─┐┌┬┐
+ ║│ │├┴┐├┤ ├┬┘  ║  ├─┤├┬┘ ││
+╚╝└─┘┴ ┴└─┘┴└─  ╚═╝┴ ┴┴└──┴┘`);
+
     let midInner = document.getElementsByClassName("midInner");
     let midInnerInfo = document.getElementsByClassName("midInnerInfo");
     let weather;
@@ -290,6 +301,12 @@
     // tap ----------------------------------
     function taptap(n) {
         const mids = document.getElementsByClassName("mid");
+        if(n === 2) {
+            mids[n].style.display = "none";
+            mids[n - 1].style.display = "block";
+            gReset();
+            return;
+        }
         mids[n].style.display = "none";
         mids[n + 1].style.display = "block";
     };
@@ -347,7 +364,7 @@
                 }
             ];
 
-            const gameBtns = document.getElementById("chooseBox").children;
+            const gameBtns = document.getElementById("chooseBoxEnd").children;
             if(joker === parseInt(cardInput.id)) {
                 cardResult.style.backgroundImage = `url(${cardImages[5].url})`;
                 //cardResult.children.forEach(e => { e.innerText = `${cardImages[5].txt}` });
@@ -377,6 +394,23 @@
             return;
         }
     };
+
+    // reset
+    const gReset = () => {
+        const cardInput = document.querySelector('input[name="cardInput"]:checked');
+        console.log("cardInput.checked", cardInput.checked);
+        if(cardInput.checked) cardInput.checked = false;
+        const gameBtns = document.getElementById("chooseBoxEnd").children;
+        gameBtns[1].style.display = "none";
+        gameBtns[0].style.display = "block";
+        let aa = document.getElementsByClassName("gStage")[0].checked;
+        console.log("aa", aa);
+        if(!aa) aa = true;
+        const cardResult = document.getElementsByClassName("cardResult")[0];
+        
+        cardResult.children[0].innerText = "Reset";
+        cardResult.children[1].innerText = "Reset";
+    }
     
 
 </script>
